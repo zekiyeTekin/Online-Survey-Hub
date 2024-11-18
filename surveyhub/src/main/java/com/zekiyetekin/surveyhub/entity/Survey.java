@@ -30,7 +30,9 @@ public class Survey {
     @Column(name = "deadline_date")
     private LocalDate deadlineDate;
 
-
+    @JoinColumn(name = "user_id", nullable = false)
+    @ManyToOne
+    private User user;
 
 
 
