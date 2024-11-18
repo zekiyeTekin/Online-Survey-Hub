@@ -30,7 +30,7 @@ public class AuthenticationService {
         user.setRole(RoleEnum.USER);
         user.setAge(request.getAge());
         user.setJob(request.getJob());
-        user.setActive(request.isActive());
+        user.setActive(true);
 
         user = userRepository.save(user);
         String token = jwtService.generateToken(user);
