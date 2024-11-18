@@ -24,7 +24,6 @@ public class UserServiceImpl implements UserService {
     public ResponseModel<User> update(User user){
 
         Optional<User> optionalUser = userRepository.findById(user.getId());
-
         if(optionalUser.isPresent()){
             User updatedUser = new User();
             updatedUser.setPassword(user.getPassword());
@@ -33,9 +32,9 @@ public class UserServiceImpl implements UserService {
             updatedUser.setName(user.getName());
             userRepository.save(updatedUser);
 
-            return new ResponseModel<>(ResponseStatusEnum.OK.getCode(), ResponseStatusEnum.OK.getMessage(), true, com.zekiyetekin.surveyhub.enumuration.responsemodel.ResponseMessageEnum.UPDATED_SUCCESSFULLY_DONE, updatedUser);
+            return new ResponseModel<>(ResponseStatusEnum.OK.getCode(), ResponseStatusEnum.OK.getMessage(), true, ResponseMessageEnum.UPDATED_SUCCESSFULLY_DONE, updatedUser);
         }
-        return new ResponseModel<>(ResponseStatusEnum.NOT_FOUND.getCode(), ResponseStatusEnum.NOT_FOUND.getMessage(), false, ResponseMessageEnum.UPDATED_ERROR, null);
+        return new ResponseModel<>(ResponseStatusEnum.NOT_FOUND.getCode(), ResponseStatusEnum.NOT_FOUND.getMessage(), false, ResponseMessageEnum.UPDATED_ERROR, user);
 
     }
 }
