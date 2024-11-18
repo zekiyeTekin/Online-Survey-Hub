@@ -8,5 +8,5 @@ public interface UserService {
 
     ResponseModel<User> update(User user);
 
-    User getUserById(Integer id);
+    ResponseModel<User> getUserById(Integer id);
 }

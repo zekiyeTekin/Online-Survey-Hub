@@ -1,5 +1,6 @@
 package com.zekiyetekin.surveyhub.controller;
 
+import com.zekiyetekin.surveyhub.entity.ResponseModel;
 import com.zekiyetekin.surveyhub.entity.SurveyUser;
 import com.zekiyetekin.surveyhub.entity.User;
 import com.zekiyetekin.surveyhub.service.SurveyUserService;
@@ -24,9 +25,12 @@ public class SurveyUserController {
     }
 
     @GetMapping("/participated")
-    public List<SurveyUser> getParticipatedSurveys(@RequestParam Integer userId){
-        User user = userService.getUserById(userId);
+    public ResponseModel<List<SurveyUser>> getParticipatedSurveys(@RequestParam Integer userId){
+        User user = userService.getUserById(userId).getData();
         return surveyUserService.getParticipatedSurveys(user);
     }
+
+
+
 
 }

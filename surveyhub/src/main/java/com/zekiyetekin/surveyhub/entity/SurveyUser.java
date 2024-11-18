@@ -3,6 +3,8 @@ package com.zekiyetekin.surveyhub.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @Setter
@@ -24,6 +26,7 @@ public class SurveyUser {
     @JoinColumn(name = "survey_id", nullable = false)
     private Survey survey;
 
-    private boolean hasParticipated;
+    @Column(name = "participation_date", nullable = false)
+    private LocalDateTime participationDate;
 
 }

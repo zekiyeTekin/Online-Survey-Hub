@@ -35,10 +35,13 @@ public class UserServiceImpl implements UserService {
         return new ResponseModel<>(ResponseStatusEnum.NOT_FOUND.getCode(), ResponseStatusEnum.NOT_FOUND.getMessage(), false, ResponseMessageEnum.UPDATED_ERROR, user);
     }
 
-    public User getUserById(Integer id){
+    public  ResponseModel<User> getUserById(Integer id){
         User findedUser = userRepository.findById(id).orElse(null);
+        if (findedUser == null){
+            return new ResponseModel<>(ResponseStatusEnum.NOT_FOUND.getCode(), ResponseStatusEnum.NOT_FOUND.getMessage(), false,ResponseMessageEnum.DATA_NOT_FOUND, null);
+        }
+        return new ResponseModel<>(ResponseStatusEnum.OK.getCode(), ResponseStatusEnum.OK.getMessage(), true, ResponseMessageEnum.SUCCESSFULLY_DONE, findedUser );
 
-        return findedUser;
 
     }
 }
