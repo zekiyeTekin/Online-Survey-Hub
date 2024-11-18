@@ -19,6 +19,10 @@ public class SurveyController {
     @GetMapping("/surveys")
     public ResponseModel<List<Survey>> getSurveysByUser(@RequestParam Integer userId){
         return surveyService.getSurveysByUser(userId);
+    }
 
+    @PostMapping("/create")
+    public ResponseModel<Survey> create(@RequestBody Survey survey){
+        return surveyService.create(survey);
     }
 }

@@ -46,6 +46,8 @@ public class SecurityConfig {
                                         "/auth/**"
                                 ).permitAll()
                                 .requestMatchers("/user/update").hasAnyAuthority(RoleEnum.USER.name())
+                                .requestMatchers("/survey-user").hasAnyAuthority(RoleEnum.USER.name())
+                                .requestMatchers("/survey/**").hasAnyAuthority(RoleEnum.USER.name())
                                 //.requestMatchers("/files/**").permitAll()
                                 .anyRequest()
                                 .authenticated()
