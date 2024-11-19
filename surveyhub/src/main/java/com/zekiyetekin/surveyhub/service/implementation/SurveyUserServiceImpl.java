@@ -11,6 +11,7 @@ import com.zekiyetekin.surveyhub.repository.SurveyUserRepository;
 import com.zekiyetekin.surveyhub.repository.UserRepository;
 import com.zekiyetekin.surveyhub.service.SurveyUserService;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -29,6 +30,12 @@ public class SurveyUserServiceImpl implements SurveyUserService {
         this.userRepository = userRepository;
         this.surveyRepository = surveyRepository;
     }
+    public ResponseModel<List<SurveyUser>> getUsersBySurvey(Survey survey){
+        List<SurveyUser> surveyUserList = surveyUserRepository.findSurveyUsersBySurvey(survey);
+        return new ResponseModel<>(ResponseStatusEnum.OK.getCode(), ResponseStatusEnum.OK.getMessage(), true, ResponseMessageEnum.LISTING_SUCCESSFULLY_DONE, surveyUserList);
+    }
+
+
     public ResponseModel<List<SurveyUser>> getParticipatedSurveys(User user)
     {
         List<SurveyUser> surveyUserList = surveyUserRepository.findSurveyUsersByUser(user);

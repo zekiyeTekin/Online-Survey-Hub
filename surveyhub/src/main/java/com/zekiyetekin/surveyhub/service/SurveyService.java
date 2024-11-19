@@ -12,5 +12,7 @@ public interface SurveyService {
 
     ResponseModel<Survey> create(Survey survey);
 
+    ResponseModel<Survey> getSurveysById(Integer surveyId);
+
 
 }

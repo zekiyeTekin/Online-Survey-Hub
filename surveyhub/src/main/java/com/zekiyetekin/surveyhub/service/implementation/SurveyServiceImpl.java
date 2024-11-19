@@ -43,12 +43,13 @@ public class SurveyServiceImpl implements SurveyService {
         }catch (Exception e){
             return new ResponseModel<>(ResponseStatusEnum.INTERNAL_SERVER_ERROR.getCode(), ResponseStatusEnum.INTERNAL_SERVER_ERROR.getMessage(), false, ResponseMessageEnum.DATA_NOT_FOUND, null);
         }
+    }
 
-
-
-
-
-
-
+    public ResponseModel<Survey> getSurveysById(Integer surveyId){
+        Survey findedSurvey = surveyRepository.findById(surveyId).orElse(null);
+        if(findedSurvey == null){
+            return new ResponseModel<>(ResponseStatusEnum.NOT_FOUND.getCode(), ResponseStatusEnum.NOT_FOUND.getMessage(), false, ResponseMessageEnum.DATA_NOT_FOUND, null);
+        }
+        return new ResponseModel<>(ResponseStatusEnum.OK.getCode(), ResponseStatusEnum.OK.getMessage(), true, ResponseMessageEnum.SUCCESSFULLY_DONE, findedSurvey );
     }
 }
