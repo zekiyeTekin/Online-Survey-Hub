@@ -10,4 +10,6 @@ public interface SurveyUserService {
 
 
     ResponseModel<List<SurveyUser>> getParticipatedSurveys(User user);
+    ResponseModel<SurveyUser> participateSurvey(Integer surveyId, Integer userId);
+
 }

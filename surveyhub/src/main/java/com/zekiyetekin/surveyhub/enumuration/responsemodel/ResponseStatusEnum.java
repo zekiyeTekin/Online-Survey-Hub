@@ -8,6 +8,9 @@ public enum ResponseStatusEnum {
     ACCEPTED(202, "Accepted"),
     NO_CONTENT(204, "No Content"),
 
+    //3xx:
+    FOUND(302, "found"),
+
 
     //4xx: Error
     BAD_REQUEST(400, "Bad Request"),

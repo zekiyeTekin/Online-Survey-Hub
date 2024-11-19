@@ -1,5 +1,6 @@
 package com.zekiyetekin.surveyhub.repository;
 
+import com.zekiyetekin.surveyhub.entity.Survey;
 import com.zekiyetekin.surveyhub.entity.SurveyUser;
 import com.zekiyetekin.surveyhub.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,5 +12,7 @@ import java.util.List;
 public interface SurveyUserRepository extends JpaRepository<SurveyUser, Integer> {
 
     List<SurveyUser> findSurveyUsersByUser(User user);
+
+    SurveyUser findSurveyUsersBySurveyAndUser(Survey survey, User user);
 
 }

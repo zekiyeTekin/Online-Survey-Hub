@@ -5,10 +5,7 @@ import com.zekiyetekin.surveyhub.entity.SurveyUser;
 import com.zekiyetekin.surveyhub.entity.User;
 import com.zekiyetekin.surveyhub.service.SurveyUserService;
 import com.zekiyetekin.surveyhub.service.UserService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,6 +26,13 @@ public class SurveyUserController {
         User user = userService.getUserById(userId).getData();
         return surveyUserService.getParticipatedSurveys(user);
     }
+
+    @PostMapping("/participate")
+    public ResponseModel<SurveyUser> participateSurvey(@RequestParam Integer surveyId, @RequestParam Integer userId){
+        return  surveyUserService.participateSurvey(surveyId, userId);
+    }
+
+
 
 
 
