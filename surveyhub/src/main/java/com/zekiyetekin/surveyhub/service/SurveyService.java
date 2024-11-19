@@ -7,7 +7,10 @@ import java.util.List;
 
 public interface SurveyService {
 
+    ResponseModel<List<Survey>> allList();
     ResponseModel<List<Survey>> getSurveysByUser(Integer userId);
 
     ResponseModel<Survey> create(Survey survey);
+
+
 }

@@ -16,6 +16,11 @@ public class SurveyController {
         this.surveyService = surveyService;
     }
 
+    @GetMapping("/all")
+    public ResponseModel<List<Survey>> allList(){
+        return surveyService.allList();
+    }
+
     @GetMapping("/surveys")
     public ResponseModel<List<Survey>> getSurveysByUser(@RequestParam Integer userId){
         return surveyService.getSurveysByUser(userId);
