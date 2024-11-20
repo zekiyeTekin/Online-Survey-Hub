@@ -15,5 +15,4 @@ public class SurveyFilter {
 
     private String category;
 
-    private String name;
 }

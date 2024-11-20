@@ -13,6 +13,10 @@ import java.util.List;
 
 public class SurveySpecification {
 
+    private SurveySpecification(){
+        throw new UnsupportedOperationException("Utility class cannot be instantiated");
+    }
+
     public static Specification<Survey> searchByDate(SurveyFilter surveyFilter){
         return (Root< Survey > root,CriteriaQuery < ?> query, CriteriaBuilder builder) ->{
             List<Predicate> predicateList = new ArrayList<>();
