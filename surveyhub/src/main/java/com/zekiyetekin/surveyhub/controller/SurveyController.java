@@ -2,6 +2,7 @@ package com.zekiyetekin.surveyhub.controller;
 
 import com.zekiyetekin.surveyhub.entity.ResponseModel;
 import com.zekiyetekin.surveyhub.entity.Survey;
+import com.zekiyetekin.surveyhub.filter.SurveyFilter;
 import com.zekiyetekin.surveyhub.service.SurveyService;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,4 +31,13 @@ public class SurveyController {
     public ResponseModel<Survey> create(@RequestBody Survey survey){
         return surveyService.create(survey);
     }
+
+    @PostMapping("/filter/by/date")
+    public ResponseModel<List<Survey>> searchByDateWithFilter(@RequestBody SurveyFilter surveyFilter){
+        return surveyService.searchByDateWithFilter(surveyFilter);
+    }
+
+
+
+
 }

@@ -4,8 +4,10 @@ import com.zekiyetekin.surveyhub.entity.ResponseModel;
 import com.zekiyetekin.surveyhub.entity.Survey;
 import com.zekiyetekin.surveyhub.enumuration.responsemodel.ResponseMessageEnum;
 import com.zekiyetekin.surveyhub.enumuration.responsemodel.ResponseStatusEnum;
+import com.zekiyetekin.surveyhub.filter.SurveyFilter;
 import com.zekiyetekin.surveyhub.repository.SurveyRepository;
 import com.zekiyetekin.surveyhub.service.SurveyService;
+import com.zekiyetekin.surveyhub.specification.SurveySpecification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -51,5 +53,13 @@ public class SurveyServiceImpl implements SurveyService {
             return new ResponseModel<>(ResponseStatusEnum.NOT_FOUND.getCode(), ResponseStatusEnum.NOT_FOUND.getMessage(), false, ResponseMessageEnum.DATA_NOT_FOUND, null);
         }
         return new ResponseModel<>(ResponseStatusEnum.OK.getCode(), ResponseStatusEnum.OK.getMessage(), true, ResponseMessageEnum.SUCCESSFULLY_DONE, findedSurvey );
+    }
+
+    public ResponseModel<List<Survey>> searchByDateWithFilter(SurveyFilter surveyFilter) {
+        List<Survey> surveyFilterList = surveyRepository.findAll(SurveySpecification.searchByDate(surveyFilter));
+        if (surveyFilterList.isEmpty()){
+            return new ResponseModel<>(ResponseStatusEnum.NOT_FOUND.getCode(), ResponseStatusEnum.NOT_FOUND.getMessage(), false, ResponseMessageEnum.SEARCHED_ERROR, null);
+        }
+        return new ResponseModel<>(ResponseStatusEnum.OK.getCode(), ResponseStatusEnum.OK.getMessage(), true, ResponseMessageEnum.SEARCHED_SUCCESSFULLY, surveyFilterList);
     }
 }
