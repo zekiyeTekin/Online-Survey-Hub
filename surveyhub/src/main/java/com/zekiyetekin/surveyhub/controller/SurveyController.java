@@ -37,6 +37,11 @@ public class SurveyController {
         return surveyService.searchByDateWithFilter(surveyFilter);
     }
 
+    @PostMapping("/filter/by/category")
+    public ResponseModel<List<Survey>> searchByCategoryWithFilter(@RequestBody SurveyFilter surveyFilter){
+        return surveyService.searchByCategoryWithFilter(surveyFilter);
+    }
+
 
 
 

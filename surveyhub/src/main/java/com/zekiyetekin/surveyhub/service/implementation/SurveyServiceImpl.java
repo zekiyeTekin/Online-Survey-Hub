@@ -62,4 +62,12 @@ public class SurveyServiceImpl implements SurveyService {
         }
         return new ResponseModel<>(ResponseStatusEnum.OK.getCode(), ResponseStatusEnum.OK.getMessage(), true, ResponseMessageEnum.SEARCHED_SUCCESSFULLY, surveyFilterList);
     }
+
+    public ResponseModel<List<Survey>> searchByCategoryWithFilter(SurveyFilter surveyFilter){
+        List<Survey> surveyFilterList = surveyRepository.findAll(SurveySpecification.searchByCategory(surveyFilter));
+        if (surveyFilterList.isEmpty()){
+            return new ResponseModel<>(ResponseStatusEnum.NOT_FOUND.getCode(), ResponseStatusEnum.NOT_FOUND.getMessage(), false, ResponseMessageEnum.SEARCHED_ERROR, null);
+        }
+        return new ResponseModel<>(ResponseStatusEnum.OK.getCode(), ResponseStatusEnum.OK.getMessage(), true, ResponseMessageEnum.SEARCHED_SUCCESSFULLY, surveyFilterList);
+    }
 }

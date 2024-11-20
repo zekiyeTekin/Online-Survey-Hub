@@ -22,6 +22,17 @@ public class SurveySpecification {
             }
             return builder.and(predicateList.toArray(predicateList.toArray(new Predicate[0])));
         };
+    }
 
+    public static Specification<Survey> searchByCategory(SurveyFilter surveyFilter){
+        return (Root< Survey > root, CriteriaQuery < ?> query, CriteriaBuilder builder) -> {
+            List<Predicate> predicateList = new ArrayList<>();
+
+            if(surveyFilter.getCategory() != null){
+                predicateList.add(builder.equal(root.get("category"), surveyFilter.getCategory()));
+            }
+            return builder.and(predicateList.toArray(predicateList.toArray(new Predicate[0])));
+
+        };
     }
 }
