@@ -46,6 +46,12 @@ public class SurveyUserController {
         return  surveyUserService.participateSurvey(surveyId, userId);
     }
 
+    @GetMapping("/not-participated")
+    public ResponseModel<List<Survey>> getNotParticipatedSurveys(@RequestParam Integer userId){
+        User user = userService.getUserById(userId).getData();
+        return surveyUserService.getNotParticipatedSurveys(user);
+    }
+
 
 
 

@@ -3,7 +3,6 @@ package com.zekiyetekin.surveyhub.service;
 import com.zekiyetekin.surveyhub.entity.ResponseModel;
 import com.zekiyetekin.surveyhub.entity.Survey;
 import com.zekiyetekin.surveyhub.filter.SurveyFilter;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 

@@ -61,7 +61,11 @@ public class SurveyUserServiceImpl implements SurveyUserService {
         surveyUserRepository.save(newSurveyUser);
 
         return new ResponseModel<>(ResponseStatusEnum.OK.getCode(), ResponseStatusEnum.OK.getMessage(), true, ResponseMessageEnum.SUCCESSFULLY_DONE, newSurveyUser);
+    }
 
+    public ResponseModel<List<Survey>> getNotParticipatedSurveys(User user){
+        List<Survey> surveyUserList = surveyUserRepository.findSurveysNotParticipatedByUser(user);
+        return new ResponseModel<>(ResponseStatusEnum.OK.getCode(), ResponseStatusEnum.OK.getMessage(), true, ResponseMessageEnum.LISTING_SUCCESSFULLY_DONE, surveyUserList);
     }
 
 }
