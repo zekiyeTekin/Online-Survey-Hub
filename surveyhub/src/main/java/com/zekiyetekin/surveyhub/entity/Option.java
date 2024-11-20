@@ -13,12 +13,12 @@ import lombok.*;
 public class Option {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String content;
 
-    @JoinColumn(name = "question_id", nullable = false)
     @ManyToOne
+    @JoinColumn(name = "question_id", nullable = false)
     private Question question;
 }

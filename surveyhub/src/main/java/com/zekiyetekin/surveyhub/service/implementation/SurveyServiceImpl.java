@@ -1,13 +1,18 @@
 package com.zekiyetekin.surveyhub.service.implementation;
 
+import com.zekiyetekin.surveyhub.entity.Option;
+import com.zekiyetekin.surveyhub.entity.Question;
 import com.zekiyetekin.surveyhub.entity.ResponseModel;
 import com.zekiyetekin.surveyhub.entity.Survey;
 import com.zekiyetekin.surveyhub.enumuration.responsemodel.ResponseMessageEnum;
 import com.zekiyetekin.surveyhub.enumuration.responsemodel.ResponseStatusEnum;
 import com.zekiyetekin.surveyhub.filter.SurveyFilter;
+import com.zekiyetekin.surveyhub.repository.OptionRepository;
+import com.zekiyetekin.surveyhub.repository.QuestionRepository;
 import com.zekiyetekin.surveyhub.repository.SurveyRepository;
 import com.zekiyetekin.surveyhub.service.SurveyService;
 import com.zekiyetekin.surveyhub.specification.SurveySpecification;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -17,8 +22,14 @@ import java.util.List;
 public class SurveyServiceImpl implements SurveyService {
 
     private final SurveyRepository surveyRepository;
-    public SurveyServiceImpl(SurveyRepository surveyRepository){
+    private final QuestionRepository questionRepository;
+    private final OptionRepository optionRepository;
+    public SurveyServiceImpl(SurveyRepository surveyRepository,
+                             QuestionRepository questionRepository,
+                             OptionRepository optionRepository){
         this.surveyRepository = surveyRepository;
+        this.questionRepository = questionRepository;
+        this.optionRepository = optionRepository;
     }
 
     public ResponseModel<List<Survey>> allList(){
@@ -37,11 +48,45 @@ public class SurveyServiceImpl implements SurveyService {
         return new ResponseModel<>(ResponseStatusEnum.OK.getCode(), ResponseStatusEnum.OK.getMessage(), true, ResponseMessageEnum.LISTING_SUCCESSFULLY_DONE, surveyList);
     }
 
+
+
     public  ResponseModel<Survey> create(Survey survey){
         try{
-            survey.setCreatedAt(LocalDate.now());
-            surveyRepository.save(survey);
-            return new ResponseModel<>(ResponseStatusEnum.CREATED.getCode(), ResponseStatusEnum.CREATED.getMessage(), true, ResponseMessageEnum.CREATED_SUCCESSFULLY, survey);
+            Survey newSurvey = new Survey();
+            newSurvey.setName(survey.getName());
+            newSurvey.setDescription(survey.getDescription());
+            newSurvey.setCategory(survey.getCategory());
+            newSurvey.setVisibility(true);
+            newSurvey.setCreatedAt(LocalDate.now());
+            newSurvey.setDeadlineDate(survey.getDeadlineDate());
+            newSurvey.setQuestionCount(survey.getQuestionCount());
+            newSurvey.setUser(survey.getUser());
+            newSurvey = surveyRepository.save(newSurvey);
+
+            for (Question question : survey.getQuestions()) {
+                Question newQuestion = new Question();
+                newQuestion.setContent(question.getContent());
+                newQuestion.setType(question.getType());
+                newQuestion.setRequired(true);
+                newQuestion.setSurvey(newSurvey);
+                newQuestion = questionRepository.save(newQuestion);
+                questionRepository.flush();
+
+                if (newQuestion.getId() == null) {
+                    throw new RuntimeException("Question kaydedilemedi!");
+                }
+                System.out.println("newQuestion.getId()"+newQuestion.getId());
+
+
+                for (Option option : question.getOptions()) {
+                    Option newOption = new Option();
+                    newOption.setContent(option.getContent());
+                    newOption.setQuestion(newQuestion);
+                    optionRepository.save(newOption);
+                    optionRepository.flush();
+                }
+            }
+        return new ResponseModel<>(ResponseStatusEnum.CREATED.getCode(), ResponseStatusEnum.CREATED.getMessage(), true, ResponseMessageEnum.CREATED_SUCCESSFULLY, newSurvey);
         }catch (Exception e){
             return new ResponseModel<>(ResponseStatusEnum.INTERNAL_SERVER_ERROR.getCode(), ResponseStatusEnum.INTERNAL_SERVER_ERROR.getMessage(), false, ResponseMessageEnum.DATA_NOT_FOUND, null);
         }
