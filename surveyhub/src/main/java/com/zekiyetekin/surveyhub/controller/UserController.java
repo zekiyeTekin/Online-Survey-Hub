@@ -1,12 +1,10 @@
 package com.zekiyetekin.surveyhub.controller;
 
+import com.zekiyetekin.surveyhub.dto.UserDto;
 import com.zekiyetekin.surveyhub.entity.ResponseModel;
 import com.zekiyetekin.surveyhub.entity.User;
 import com.zekiyetekin.surveyhub.service.UserService;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
@@ -20,9 +18,12 @@ public class UserController {
     }
 
     @PutMapping("/update")
-    public ResponseModel<User> update(@RequestBody User user){
-        return userService.update(user);
+    public ResponseModel<UserDto> update(@RequestBody UserDto userDto){
+        return userService.update(userDto);
+    }
 
-
+    @GetMapping("/by")
+    ResponseModel<User> getUserById(@RequestParam Integer id){
+        return userService.getUserById(id);
     }
 }

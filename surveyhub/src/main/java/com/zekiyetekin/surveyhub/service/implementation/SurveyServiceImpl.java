@@ -1,5 +1,6 @@
 package com.zekiyetekin.surveyhub.service.implementation;
 
+import com.zekiyetekin.surveyhub.dto.SurveyDto;
 import com.zekiyetekin.surveyhub.entity.Option;
 import com.zekiyetekin.surveyhub.entity.Question;
 import com.zekiyetekin.surveyhub.entity.ResponseModel;
@@ -7,6 +8,7 @@ import com.zekiyetekin.surveyhub.entity.Survey;
 import com.zekiyetekin.surveyhub.enumuration.responsemodel.ResponseMessageEnum;
 import com.zekiyetekin.surveyhub.enumuration.responsemodel.ResponseStatusEnum;
 import com.zekiyetekin.surveyhub.filter.SurveyFilter;
+import com.zekiyetekin.surveyhub.mapper.SurveyMapper;
 import com.zekiyetekin.surveyhub.repository.OptionRepository;
 import com.zekiyetekin.surveyhub.repository.QuestionRepository;
 import com.zekiyetekin.surveyhub.repository.SurveyRepository;
@@ -23,20 +25,23 @@ public class SurveyServiceImpl implements SurveyService {
     private final SurveyRepository surveyRepository;
     private final QuestionRepository questionRepository;
     private final OptionRepository optionRepository;
+    private final SurveyMapper surveyMapper;
     public SurveyServiceImpl(SurveyRepository surveyRepository,
                              QuestionRepository questionRepository,
-                             OptionRepository optionRepository){
+                             OptionRepository optionRepository,
+                             SurveyMapper surveyMapper){
         this.surveyRepository = surveyRepository;
         this.questionRepository = questionRepository;
         this.optionRepository = optionRepository;
+        this.surveyMapper = surveyMapper;
     }
 
-    public ResponseModel<List<Survey>> allList(){
+    public ResponseModel<List<SurveyDto>> allList(){
         List<Survey> surveyList = surveyRepository.findAll();
         if (surveyList.isEmpty()){
             return new ResponseModel<>(ResponseStatusEnum.NOT_FOUND.getCode(), ResponseStatusEnum.NOT_FOUND.getMessage(), false, ResponseMessageEnum.DATA_NOT_FOUND, null);
         }
-        return new ResponseModel<>(ResponseStatusEnum.OK.getCode(), ResponseStatusEnum.OK.getMessage(), true, ResponseMessageEnum.LISTING_SUCCESSFULLY_DONE, surveyList);
+        return new ResponseModel<>(ResponseStatusEnum.OK.getCode(), ResponseStatusEnum.OK.getMessage(), true, ResponseMessageEnum.LISTING_SUCCESSFULLY_DONE, surveyMapper.convertList(surveyList));
     }
 
     public ResponseModel<List<Survey>> getSurveysByUser(Integer userId){

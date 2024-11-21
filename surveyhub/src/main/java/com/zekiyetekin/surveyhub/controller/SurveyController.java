@@ -1,5 +1,6 @@
 package com.zekiyetekin.surveyhub.controller;
 
+import com.zekiyetekin.surveyhub.dto.SurveyDto;
 import com.zekiyetekin.surveyhub.entity.ResponseModel;
 import com.zekiyetekin.surveyhub.entity.Survey;
 import com.zekiyetekin.surveyhub.filter.SurveyFilter;
@@ -18,7 +19,7 @@ public class SurveyController {
     }
 
     @GetMapping("/all")
-    public ResponseModel<List<Survey>> allList(){
+    public ResponseModel<List<SurveyDto>> allList(){
         return surveyService.allList();
     }
 
@@ -33,7 +34,7 @@ public class SurveyController {
     }
 
     @GetMapping("/by")
-    ResponseModel<Survey> getSurveysById(Integer surveyId){
+    ResponseModel<Survey> getSurveysById(@RequestBody Integer surveyId){
         return surveyService.getSurveysById(surveyId);
     }
 
