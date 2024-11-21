@@ -44,17 +44,17 @@ public class SurveyServiceImpl implements SurveyService {
         return new ResponseModel<>(ResponseStatusEnum.OK.getCode(), ResponseStatusEnum.OK.getMessage(), true, ResponseMessageEnum.LISTING_SUCCESSFULLY_DONE, surveyMapper.convertList(surveyList));
     }
 
-    public ResponseModel<List<Survey>> getSurveysByUser(Integer userId){
+    public ResponseModel<List<SurveyDto>> getSurveysByUser(Integer userId){
         List<Survey> surveyList = surveyRepository.findSurveysByUser_Id(userId);
         if (surveyList.isEmpty()){
             return new ResponseModel<>(ResponseStatusEnum.NOT_FOUND.getCode(), ResponseStatusEnum.NOT_FOUND.getMessage(), false, ResponseMessageEnum.DATA_NOT_FOUND, null);
         }
-        return new ResponseModel<>(ResponseStatusEnum.OK.getCode(), ResponseStatusEnum.OK.getMessage(), true, ResponseMessageEnum.LISTING_SUCCESSFULLY_DONE, surveyList);
+        return new ResponseModel<>(ResponseStatusEnum.OK.getCode(), ResponseStatusEnum.OK.getMessage(), true, ResponseMessageEnum.LISTING_SUCCESSFULLY_DONE, surveyMapper.convertList(surveyList));
     }
 
 
 
-    public  ResponseModel<Survey> create(Survey survey){
+    public  ResponseModel<SurveyDto> create(Survey survey){
         try{
             Survey newSurvey = new Survey();
             newSurvey.setName(survey.getName());
@@ -84,7 +84,7 @@ public class SurveyServiceImpl implements SurveyService {
                     optionRepository.flush();
                 }
             }
-        return new ResponseModel<>(ResponseStatusEnum.CREATED.getCode(), ResponseStatusEnum.CREATED.getMessage(), true, ResponseMessageEnum.CREATED_SUCCESSFULLY, newSurvey);
+        return new ResponseModel<>(ResponseStatusEnum.CREATED.getCode(), ResponseStatusEnum.CREATED.getMessage(), true, ResponseMessageEnum.CREATED_SUCCESSFULLY, surveyMapper.toDto(newSurvey));
         }catch (Exception e){
             return new ResponseModel<>(ResponseStatusEnum.INTERNAL_SERVER_ERROR.getCode(), ResponseStatusEnum.INTERNAL_SERVER_ERROR.getMessage(), false, ResponseMessageEnum.DATA_NOT_FOUND, null);
         }
@@ -95,22 +95,22 @@ public class SurveyServiceImpl implements SurveyService {
         if(findedSurvey == null){
             return new ResponseModel<>(ResponseStatusEnum.NOT_FOUND.getCode(), ResponseStatusEnum.NOT_FOUND.getMessage(), false, ResponseMessageEnum.DATA_NOT_FOUND, null);
         }
-        return new ResponseModel<>(ResponseStatusEnum.OK.getCode(), ResponseStatusEnum.OK.getMessage(), true, ResponseMessageEnum.SUCCESSFULLY_DONE, findedSurvey );
+        return new ResponseModel<>(ResponseStatusEnum.OK.getCode(), ResponseStatusEnum.OK.getMessage(), true, ResponseMessageEnum.SUCCESSFULLY_DONE, findedSurvey);
     }
 
-    public ResponseModel<List<Survey>> searchByDateWithFilter(SurveyFilter surveyFilter) {
+    public ResponseModel<List<SurveyDto>> searchByDateWithFilter(SurveyFilter surveyFilter) {
         List<Survey> surveyFilterList = surveyRepository.findAll(SurveySpecification.searchByDate(surveyFilter));
         if (surveyFilterList.isEmpty()){
             return new ResponseModel<>(ResponseStatusEnum.NOT_FOUND.getCode(), ResponseStatusEnum.NOT_FOUND.getMessage(), false, ResponseMessageEnum.SEARCHED_ERROR, null);
         }
-        return new ResponseModel<>(ResponseStatusEnum.OK.getCode(), ResponseStatusEnum.OK.getMessage(), true, ResponseMessageEnum.SEARCHED_SUCCESSFULLY, surveyFilterList);
+        return new ResponseModel<>(ResponseStatusEnum.OK.getCode(), ResponseStatusEnum.OK.getMessage(), true, ResponseMessageEnum.SEARCHED_SUCCESSFULLY, surveyMapper.convertList(surveyFilterList));
     }
 
-    public ResponseModel<List<Survey>> searchByCategoryWithFilter(SurveyFilter surveyFilter){
+    public ResponseModel<List<SurveyDto>> searchByCategoryWithFilter(SurveyFilter surveyFilter){
         List<Survey> surveyFilterList = surveyRepository.findAll(SurveySpecification.searchByCategory(surveyFilter));
         if (surveyFilterList.isEmpty()){
             return new ResponseModel<>(ResponseStatusEnum.NOT_FOUND.getCode(), ResponseStatusEnum.NOT_FOUND.getMessage(), false, ResponseMessageEnum.SEARCHED_ERROR, null);
         }
-        return new ResponseModel<>(ResponseStatusEnum.OK.getCode(), ResponseStatusEnum.OK.getMessage(), true, ResponseMessageEnum.SEARCHED_SUCCESSFULLY, surveyFilterList);
+        return new ResponseModel<>(ResponseStatusEnum.OK.getCode(), ResponseStatusEnum.OK.getMessage(), true, ResponseMessageEnum.SEARCHED_SUCCESSFULLY, surveyMapper.convertList(surveyFilterList));
     }
 }

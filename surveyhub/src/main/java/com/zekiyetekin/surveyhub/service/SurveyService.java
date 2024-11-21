@@ -10,11 +10,11 @@ import java.util.List;
 public interface SurveyService {
 
     ResponseModel<List<SurveyDto>> allList();
-    ResponseModel<List<Survey>> getSurveysByUser(Integer userId);
-    ResponseModel<Survey> create(Survey survey);
+    ResponseModel<List<SurveyDto>> getSurveysByUser(Integer userId);
+    ResponseModel<SurveyDto> create(Survey survey);
     ResponseModel<Survey> getSurveysById(Integer surveyId);
-    ResponseModel<List<Survey>> searchByDateWithFilter(SurveyFilter surveyFilter);
-    ResponseModel<List<Survey>> searchByCategoryWithFilter(SurveyFilter surveyFilter);
+    ResponseModel<List<SurveyDto>> searchByDateWithFilter(SurveyFilter surveyFilter);
+    ResponseModel<List<SurveyDto>> searchByCategoryWithFilter(SurveyFilter surveyFilter);
 
 
 }

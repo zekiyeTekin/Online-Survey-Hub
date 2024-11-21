@@ -24,12 +24,12 @@ public class SurveyController {
     }
 
     @GetMapping("/surveys")
-    public ResponseModel<List<Survey>> getSurveysByUser(@RequestParam Integer userId){
+    public ResponseModel<List<SurveyDto>> getSurveysByUser(@RequestParam Integer userId){
         return surveyService.getSurveysByUser(userId);
     }
 
     @PostMapping("/create")
-    public ResponseModel<Survey> create(@RequestBody Survey survey){
+    public ResponseModel<SurveyDto> create(@RequestBody Survey survey){
         return surveyService.create(survey);
     }
 
@@ -39,12 +39,12 @@ public class SurveyController {
     }
 
     @PostMapping("/filter/by/date")
-    public ResponseModel<List<Survey>> searchByDateWithFilter(@RequestBody SurveyFilter surveyFilter){
+    public ResponseModel<List<SurveyDto>> searchByDateWithFilter(@RequestBody SurveyFilter surveyFilter){
         return surveyService.searchByDateWithFilter(surveyFilter);
     }
 
     @PostMapping("/filter/by/category")
-    public ResponseModel<List<Survey>> searchByCategoryWithFilter(@RequestBody SurveyFilter surveyFilter){
+    public ResponseModel<List<SurveyDto>> searchByCategoryWithFilter(@RequestBody SurveyFilter surveyFilter){
         return surveyService.searchByCategoryWithFilter(surveyFilter);
     }
 

@@ -1,5 +1,6 @@
 package com.zekiyetekin.surveyhub.service;
 
+import com.zekiyetekin.surveyhub.dto.SurveyUserDto;
 import com.zekiyetekin.surveyhub.entity.ResponseModel;
 import com.zekiyetekin.surveyhub.entity.Survey;
 import com.zekiyetekin.surveyhub.entity.SurveyUser;
