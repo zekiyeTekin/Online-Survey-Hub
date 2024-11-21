@@ -1,6 +1,8 @@
 package com.zekiyetekin.surveyhub.controller;
 
+
 import com.zekiyetekin.surveyhub.dto.SurveyDto;
+import com.zekiyetekin.surveyhub.dto.SurveyUserDto;
 import com.zekiyetekin.surveyhub.entity.ResponseModel;
 import com.zekiyetekin.surveyhub.entity.Survey;
 import com.zekiyetekin.surveyhub.entity.SurveyUser;
@@ -32,7 +34,7 @@ public class SurveyUserController {
 
     //specific survey get participate users
     @GetMapping("/usersBySurvey")
-    public ResponseModel<List<SurveyUser>> getUsersBySurvey(@RequestParam Integer surveyId){
+    public ResponseModel<List<SurveyUserDto>> getUsersBySurvey(@RequestParam Integer surveyId){
         Survey survey = surveyService.getSurveysById(surveyId).getData();
         return surveyUserService.getUsersBySurvey(survey);
     }
@@ -40,19 +42,19 @@ public class SurveyUserController {
 
     // specific user get participated surveys
     @GetMapping("/participated")
-    public ResponseModel<List<SurveyUser>> getParticipatedSurveys(@RequestParam Integer userId){
+    public ResponseModel<List<SurveyUserDto>> getParticipatedSurveys(@RequestParam Integer userId){
         User user = userService.getUserById(userId).getData();
         return surveyUserService.getParticipatedSurveys(user);
     }
 
     // created survey
     @PostMapping("/participate")
-    public ResponseModel<SurveyUser> participateSurvey(@RequestParam Integer surveyId, @RequestParam Integer userId){
+    public ResponseModel<SurveyUserDto> participateSurvey(@RequestParam Integer surveyId, @RequestParam Integer userId){
         return  surveyUserService.participateSurvey(surveyId, userId);
     }
 
     @GetMapping("/not-participated")
-    public ResponseModel<List<Survey>> getNotParticipatedSurveys(@RequestParam Integer userId){
+    public ResponseModel<List<SurveyDto>> getNotParticipatedSurveys(@RequestParam Integer userId){
         User user = userService.getUserById(userId).getData();
         return surveyUserService.getNotParticipatedSurveys(user);
     }

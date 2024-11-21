@@ -1,5 +1,6 @@
 package com.zekiyetekin.surveyhub.service;
 
+import com.zekiyetekin.surveyhub.dto.SurveyDto;
 import com.zekiyetekin.surveyhub.dto.SurveyUserDto;
 import com.zekiyetekin.surveyhub.entity.ResponseModel;
 import com.zekiyetekin.surveyhub.entity.Survey;
@@ -10,10 +11,9 @@ import java.util.List;
 
 public interface SurveyUserService {
 
-    ResponseModel<List<SurveyUser>> getUsersBySurvey(Survey survey);
-    ResponseModel<List<SurveyUser>> getParticipatedSurveys(User user);
-    ResponseModel<SurveyUser> participateSurvey(Integer surveyId, Integer userId);
-
-    ResponseModel<List<Survey>> getNotParticipatedSurveys(User user);
+    ResponseModel<List<SurveyUserDto>> getUsersBySurvey(Survey survey);
+    ResponseModel<List<SurveyUserDto>> getParticipatedSurveys(User user);
+    ResponseModel<SurveyUserDto> participateSurvey(Integer surveyId, Integer userId);
+    ResponseModel<List<SurveyDto>> getNotParticipatedSurveys(User user);
 
 }
