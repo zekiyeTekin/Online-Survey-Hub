@@ -12,7 +12,6 @@ import com.zekiyetekin.surveyhub.repository.QuestionRepository;
 import com.zekiyetekin.surveyhub.repository.SurveyRepository;
 import com.zekiyetekin.surveyhub.service.SurveyService;
 import com.zekiyetekin.surveyhub.specification.SurveySpecification;
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -71,12 +70,6 @@ public class SurveyServiceImpl implements SurveyService {
                 newQuestion.setSurvey(newSurvey);
                 newQuestion = questionRepository.save(newQuestion);
                 questionRepository.flush();
-
-                if (newQuestion.getId() == null) {
-                    throw new RuntimeException("Question kaydedilemedi!");
-                }
-                System.out.println("newQuestion.getId()"+newQuestion.getId());
-
 
                 for (Option option : question.getOptions()) {
                     Option newOption = new Option();

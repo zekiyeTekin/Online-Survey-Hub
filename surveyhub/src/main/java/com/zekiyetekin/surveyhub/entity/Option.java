@@ -1,5 +1,6 @@
 package com.zekiyetekin.surveyhub.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,6 +19,7 @@ public class Option {
 
     private String content;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "question_id", nullable = false)
     private Question question;

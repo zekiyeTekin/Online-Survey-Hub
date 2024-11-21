@@ -32,6 +32,11 @@ public class SurveyController {
         return surveyService.create(survey);
     }
 
+    @GetMapping("/by")
+    ResponseModel<Survey> getSurveysById(Integer surveyId){
+        return surveyService.getSurveysById(surveyId);
+    }
+
     @PostMapping("/filter/by/date")
     public ResponseModel<List<Survey>> searchByDateWithFilter(@RequestBody SurveyFilter surveyFilter){
         return surveyService.searchByDateWithFilter(surveyFilter);

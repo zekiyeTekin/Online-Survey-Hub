@@ -11,7 +11,6 @@ import com.zekiyetekin.surveyhub.repository.SurveyUserRepository;
 import com.zekiyetekin.surveyhub.repository.UserRepository;
 import com.zekiyetekin.surveyhub.service.SurveyUserService;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
 import java.util.List;

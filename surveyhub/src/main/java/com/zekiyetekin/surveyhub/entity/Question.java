@@ -1,5 +1,6 @@
 package com.zekiyetekin.surveyhub.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,9 +25,11 @@ public class Question {
 
     private String type;
 
+    @JsonIgnore
     @JoinColumn(name = "survey_id", nullable = false)
     @ManyToOne(cascade = CascadeType.ALL)
     private Survey survey;
+
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Option> options  = new ArrayList<>();
