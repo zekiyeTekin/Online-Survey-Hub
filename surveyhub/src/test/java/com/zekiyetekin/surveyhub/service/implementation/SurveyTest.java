@@ -3,6 +3,7 @@ package com.zekiyetekin.surveyhub.service.implementation;
 import com.zekiyetekin.surveyhub.dto.SurveyDto;
 import com.zekiyetekin.surveyhub.entity.ResponseModel;
 import com.zekiyetekin.surveyhub.entity.Survey;
+import com.zekiyetekin.surveyhub.entity.User;
 import com.zekiyetekin.surveyhub.enumuration.responsemodel.ResponseMessageEnum;
 import com.zekiyetekin.surveyhub.enumuration.responsemodel.ResponseStatusEnum;
 import com.zekiyetekin.surveyhub.mapper.SurveyMapper;
@@ -65,6 +66,38 @@ class SurveyTest {
         assertEquals(ResponseMessageEnum.DATA_NOT_FOUND, response.getMessage());
         assertFalse(response.getSuccess());
         assertNull(response.getData());
+    }
+
+    @Test
+    void testGetSurveysByUser_Success(){
+        //Arrange
+        Integer userId = 1;
+        User user = new User();
+        user.setId(userId);
+
+        Survey survey = new Survey();
+        survey.setId(1);
+        survey.setUser(user);
+
+        List<Survey> surveyList = new ArrayList<>();
+        surveyList.add(survey);
+
+        List<SurveyDto> surveyDtoList = new ArrayList<>();
+
+        when(surveyRepository.findSurveysByUser_Id(userId)).thenReturn(surveyList);
+        when(surveyMapper.convertList(surveyList)).thenReturn(surveyDtoList);
+
+        // Act:
+        ResponseModel<List<SurveyDto>> response = surveyService.getSurveysByUser(userId);
+
+        // Assert:
+        assertEquals(ResponseStatusEnum.OK.getCode(), response.getCode());
+        assertEquals(ResponseMessageEnum.LISTING_SUCCESSFULLY_DONE, response.getMessage());
+        assertTrue(response.getSuccess());
+        assertEquals(surveyDtoList, response.getData());
+
+        verify(surveyRepository, times(1)).findSurveysByUser_Id(userId);
+        verify(surveyMapper,times(1)).convertList(surveyList);
     }
 
 }
