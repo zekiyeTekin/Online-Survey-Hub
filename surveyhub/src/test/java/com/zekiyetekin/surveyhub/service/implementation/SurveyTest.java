@@ -100,4 +100,21 @@ class SurveyTest {
         verify(surveyMapper,times(1)).convertList(surveyList);
     }
 
+    @Test
+    void testGetSurveysByUser_Exception(){
+        Integer userId = 1;
+
+        when(surveyRepository.findSurveysByUser_Id(userId)).thenReturn(new ArrayList<>());
+
+        ResponseModel<List<SurveyDto>> response = surveyService.getSurveysByUser(userId);
+
+        assertEquals(ResponseStatusEnum.NOT_FOUND.getCode(), response.getCode());
+        assertEquals(ResponseMessageEnum.DATA_NOT_FOUND, response.getMessage());
+        assertFalse(response.getSuccess());
+        assertNull(response.getData());
+
+        verify(surveyRepository, times(1)).findSurveysByUser_Id(userId);
+        verify(surveyMapper,times(0)).convertList(any());
+    }
+
 }
