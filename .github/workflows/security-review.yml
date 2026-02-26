@@ -1,0 +1,36 @@
+name: Claude Code Security Review
+
+on:
+  pull_request:
+    branches: [ master, main ]
+  workflow_dispatch:
+
+jobs:
+  security-review:
+    name: 🔐 Claude Security Analysis
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Claude Security Review
+        uses: anthropics/claude-code-action@beta
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          direct_prompt: |
+            Bu bir Java Spring Boot anket platformu.
+            Kapsamlı güvenlik analizi yap:
+            1. SQL Injection, XSS, IDOR açıklarını ara
+            2. JWT implementasyonunu incele
+            3. Spring Security konfigürasyonunu kontrol et
+            4. Hardcoded credentials var mı bak
+            5. Authorization bypass mümkün mü kontrol et
+            
+            Her bulgu için: Severity, dosya/satır, neden tehlikeli, nasıl fix edilir.
+            CRITICAL bulgular önce gelsin.
