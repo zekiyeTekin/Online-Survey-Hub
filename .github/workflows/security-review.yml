@@ -23,7 +23,7 @@ jobs:
       - name: Claude Security Review
         uses: anthropics/claude-code-action@beta
         with:
-          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          anthropic_api_key: ${{ secrets.zek_ccs_secret_key }}
           direct_prompt: |
             Bu bir Java Spring Boot anket platformu.
             Kapsamlı güvenlik analizi yap:
